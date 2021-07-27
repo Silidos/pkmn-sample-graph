@@ -1,0 +1,81 @@
+directive @connection(for: String) on FIELD_DEFINITION
+
+"Queries"
+type Query {
+    "Returns all pokemon"
+    pokemon(
+        "Returns the first n elements from the list."
+        first: Int,
+        "Returns the elements in the list that come after the specified cursor."
+        after: String
+    ) : PokemonConnection @connection(for: "Pokemon")
+    "Searches for a specific pokemon"
+    searchPokemon(
+        "The name of the pokemon to search for"
+        search: String
+        "Returns the first n elements from the list."
+        first: Int,
+        "Returns the elements in the list that come after the specified cursor."
+        after: String
+    ) : PokemonConnection @connection(for: "Pokemon")
+}
+
+type PokemonConnection {
+    "A list of edges."
+    edges: [PokemonConnectionEdge]
+    "Information to aid in pagination."
+    pageInfo: PageInfo!
+}
+
+"An edge in a Character connection."
+type PokemonConnectionEdge {
+    "A cursor for use in pagination."
+    cursor: String
+    "The item at the end of the edge."
+    node: Pokemon
+}
+
+type Pokemon {
+    "Name of Pokemon"
+    name: String
+    "Description of Pokemon"
+    description: String
+    "Ability details"
+    abilityDetails: AbilityDetails
+    "Type of pokemon"
+    type: String
+    "Weaknesses of pokemon"
+    weaknesses: String
+    "Attack stat"
+    attack: Int
+    "Defense stat"
+    defense: Int
+    "HP stat"
+    hp: Int
+    "Special attack stat"
+    specialAttack: Int
+    "Special defense stat"
+    specialDefense: Int
+    "Speed stat"
+    speed: Int
+}
+
+"Ability details"
+type AbilityDetails {
+    "Name of abilityDetails"
+    name: String
+    "Ability description"
+    description: String
+}
+
+"Information about pagination in a connection."
+type PageInfo {
+    "When paginating forward, the cursor to continue."
+    endCursor: String
+    "When paginating forward, are there more items?"
+    hasNextPage: Boolean!
+    "When paginating backwards, are there more items?"
+    hasPreviousPage: Boolean!
+    "When paginating backwards, the cursor to continue."
+    startCursor: String
+}

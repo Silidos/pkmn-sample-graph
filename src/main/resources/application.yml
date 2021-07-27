@@ -1,0 +1,43 @@
+pokemondapi:
+  uri: http://localhost:8080
+spring:
+  application:
+    name: pkmn-graph
+  jackson:
+    deserialization:
+      READ_UNKNOWN_ENUM_VALUES_USING_DEFAULT_VALUE: true
+  servlet:
+    multipart:
+      enabled: true
+      location: /tmp
+  output:
+    ansi:
+      enabled: always
+server:
+  port: 5022
+  compression:
+    enabled: true
+    mime-types: application/json, gzip
+management:
+  endpoints:
+    web:
+      base-path: /
+      exposure:
+        include: health,info,metrics
+
+graphql:
+  servlet:
+    mapping: /graphql
+    enabled: true
+    tracing-enabled: true
+    actuator-metrics: true
+    exception-handlers-enabled: true
+
+  playground:
+    mapping: /playground
+    endpoint: /graphql
+    pageTitle: Playground
+    enabled: true
+    cdn:
+      enabled: true
+
